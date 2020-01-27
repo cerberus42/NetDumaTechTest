@@ -46,21 +46,11 @@ namespace NetDumaTechTestC
             }
             running = true;
             int idsearch = 0;
-            while (running == true)
-            {
-                var searchid = Console.ReadKey();
-                if (char.IsDigit(searchid.KeyChar))
-                {
-                    idsearch = int.Parse(searchid.KeyChar.ToString());
-                    Console.WriteLine("\nUser Inserted : {0}", idsearch); // Say what user inserted 
-                    running = false;
-                }
-                else
-                {
-                    running = true;  // Else we assign a default value
-                    Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
-                }
-            }
+
+            string searchid = Console.ReadLine();
+
+            idsearch = Int32.Parse(searchid);
+
             string statement = string.Format("SELECT * FROM Contact_Info WHERE Contact_ID = {0}", idsearch);
 
             openConnection();

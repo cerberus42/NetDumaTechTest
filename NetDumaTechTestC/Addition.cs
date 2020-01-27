@@ -10,10 +10,12 @@ namespace NetDumaTechTestC
     {
         Menus menu = new Menus();
         bool running = true;
+        public bool redo = true;
+        public static string[] temp = new string[9];
+        public static string[] titleName = { "First Name", "Last Name", "Email", "Telephone", "Street", "Town", "Country" };
         public void newContact()
         {
-            string[] temp = new string[9];
-            string[] titleName = {"First Name", "Last Name", "Email", "Telephone", "Street", "Town", "Country" }; 
+
             Console.WriteLine("Please enter all the information in as correct as possible. Maximum field sizes vary.");
             int i = -1;
             foreach(string s in titleName)
@@ -48,7 +50,8 @@ namespace NetDumaTechTestC
                 }
 
             }
-            Console.WriteLine("Does this information look correct?\n" + "Full Name : " + temp[0] + temp[1] + "\nEmail : " + temp[2] + "\nTelephone : " + temp[3] + "Address : " + temp[4] + ", " + temp[5] + ", " + temp[6]);
+            //Console.WriteLine("Does this information look correct?\n" + "Full Name : " + temp[0] + temp[1] + "\nEmail : " + temp[2] + "\nTelephone : " + temp[3] + "Address : " + temp[4] + ", " + temp[5] + ", " + temp[6]);
+
             menu.confirmAdditionMenu();
 
 
@@ -73,8 +76,44 @@ namespace NetDumaTechTestC
             }
 
         }
+        public void editRunning()
+        {
+            bool running = true;
+            while(running == true)
+            {
+                int num = menu.changeAdditionMember();
+                running = true;
+                
+                string header = string.Format("Please enter your {0}", titleName[num]);
+                Console.WriteLine(header);
+                if (num == 2)
+                {
+                    string[] testing = { "@", ".com", ".uk", ".co" };
+                    while (running == true)
+                    {
+                        temp[2] = Console.ReadLine();
+                        if (testing.Any(temp[2].Contains) == true) running = false;
+                        else if (testing.Any(temp[2].Contains) == false) Console.WriteLine("You entered {0} please enter a valid string", temp[2]);
+                    }
+                }
+                if (num == 3)
+                {
+                    {
+                        temp[3] = Console.ReadLine();
+                        if (isNotInt(temp[3]) == true) running = false;
+                        else if (isNotInt(temp[3]) == false) Console.WriteLine("You entered {0} please enter a valid string", temp[3]);
+                    }
+                }
+                while (running == true)
+                {
+                    temp[num] = Console.ReadLine();
+                    if (isInt(temp[num]) == true) running = false;
+                    else if (isInt(temp[num]) == false) Console.WriteLine("You entered {0} please enter a valid string", temp[num]);
+                }
+                menu.confirmAdditionMenu();
 
-
+            }
+        }
         public bool isInt(string word)
         {
             if (word.Any(Char.IsDigit)) return false;

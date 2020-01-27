@@ -12,3 +12,4 @@ Bugs:
 	Resizing the window exessively causes the buffer to get confused and delete text on screen
 What I can do better?
 	Structure the code better
+	Add in modifying an existing contact

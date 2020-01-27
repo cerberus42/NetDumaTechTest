@@ -133,12 +133,16 @@ namespace NetDumaTechTestC
         }
 
 
-
+        public int changeSelection = 0;
         public void confirmAdditionMenu()
         {
+
+            Console.WriteLine("Does this information look correct?\n" + "Full Name : " + Adding.temp[0] + Adding.temp[1] + "\nEmail : " + Adding.temp[2] + "\nTelephone : " + Adding.temp[3] + "\nAddress : " + Adding.temp[4] + ", " + Adding.temp[5] + ", " + Adding.temp[6]);
+
             Console.WriteLine("\nProceed? \n1. Yes\n2. No\n3. Go back to menu\n4. Exit");
             bool running = true;
             int switchInput = 0;
+            
             Adding add = new Adding();
 
             while (running == true)
@@ -159,10 +163,10 @@ namespace NetDumaTechTestC
             switch (switchInput)
             {
                 case 1:
-
+                    
                     break;
                 case 2:
-                    add.newContact();
+                    add.editRunning();
                     break;
                 case 3:
                     searchMenu();
@@ -171,6 +175,61 @@ namespace NetDumaTechTestC
                     Environment.Exit(0);
                     break;
             }
+        }
+        public int changeAdditionMember()
+        {
+            Console.WriteLine("\nWhat member would you like to change? \n1. First Name\n2. Last Name\n3. Email\n4. Telephone\n5. Street\n6. Town\n7. Country\n8. Redo all\n9. Exit Program without adding");
+            bool running = true;
+            int switchInput = 0, member = 1;
+
+            Adding add = new Adding();
+
+            while (running == true)
+            {
+                var input = Console.ReadKey();
+                if (char.IsDigit(input.KeyChar))
+                {
+                    switchInput = int.Parse(input.KeyChar.ToString());
+                    Console.WriteLine("\nUser Inserted : {0}", switchInput); // Say what user inserted 
+                    running = false;
+                }
+                else
+                {
+                    running = true;  // Else we assign a default value
+                    Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
+                }
+            }
+            switch (switchInput)
+            {
+                case 1:
+                    member = 0;
+                    break;
+                case 2:
+                    member = 1;
+                    break;
+                case 3:
+                    member = 2;
+                    break;
+                case 4:
+                    member = 3;
+                    break;
+                case 5:
+                    member = 4;
+                    break;
+                case 6:
+                    member = 5;
+                    break;
+                case 7:
+                    member = 6;
+                    break;
+                case 8:
+                    add.newContact();
+                    break;
+                case 9:
+                    Environment.Exit(0);
+                    break;
+            }
+            return member;
         }
     }
 }
