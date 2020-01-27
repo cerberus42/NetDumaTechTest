@@ -5,9 +5,11 @@ using System.Text;
 
 namespace NetDumaTechTestC
 {
+
     class Menus : Title
     {
 
+    int dataflag = 1;
 
         public void mainMenu()
         {
@@ -44,6 +46,10 @@ namespace NetDumaTechTestC
                     break;
             }
             mainMenu();
+        }
+        public void databaseType()
+        {
+
         }
         public void searchMenu()
         {
