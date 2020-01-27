@@ -198,15 +198,28 @@ namespace NetDumaTechTestC
             if (switchInput == 1)
             {
                 statement = string.Format("SELECT * FROM Contact_Info ORDER BY {0} ASC", varSwitch, keyword);
-                SqlCommand ascCommand = new SqlCommand(statement, conn);
-                dataReader = ascCommand.ExecuteReader();
-
+                try
+                {
+                    SqlCommand ascCommand = new SqlCommand(statement, conn);
+                    dataReader = ascCommand.ExecuteReader();
+                }
+                catch (InvalidOperationException f)
+                {
+                    Console.WriteLine("Connection to the database has failed");
+                }
                 if (concatFlag == 1)
                 {
                     dataReader.Close();
                     statement = string.Format("SELECT CONCAT(First_Name ,Other_Name) AS Full_Name, Email, Telephone, CONCAT(Street, Town, Country) AS Address FROM Contact_Info ORDER BY {0} ASC", varSwitch, keyword);
-                    SqlCommand ascConcatCommand = new SqlCommand(statement, conn);
-                    dataReader = ascConcatCommand.ExecuteReader();
+                    try
+                    {
+                        SqlCommand ascConcatCommand = new SqlCommand(statement, conn);
+                        dataReader = ascConcatCommand.ExecuteReader();
+                    }
+                    catch (InvalidOperationException f)
+                    {
+                        Console.WriteLine("Connection to the database has failed");
+                    }
                 }
             }
 
@@ -214,14 +227,29 @@ namespace NetDumaTechTestC
             {
 
                 statement = string.Format("SELECT * FROM Contact_Info ORDER BY {0} DESC", varSwitch, keyword);
-                SqlCommand descCommand = new SqlCommand(statement, conn);
-                dataReader = descCommand.ExecuteReader();
+                try
+                {
+                    SqlCommand descCommand = new SqlCommand(statement, conn);
+                    dataReader = descCommand.ExecuteReader();
+                }
+                catch (InvalidOperationException f)
+                {
+                    Console.WriteLine("Connection to the database has failed");
+                }
                 if (concatFlag == 1)
                 {
                     dataReader.Close();
                     statement = string.Format("SELECT CONCAT(First_Name ,Other_Name) AS Full_Name, Email, Telephone, CONCAT(Street, Town, Country) AS Address FROM Contact_Info ORDER BY {0} ASC", varSwitch, keyword);
+                    try
+                    {
                     SqlCommand descConcatCommand = new SqlCommand(statement, conn);
                     dataReader = descConcatCommand.ExecuteReader();
+                    }
+                    catch (InvalidOperationException f)
+                    {
+                        Console.WriteLine("Connection to the database has failed");
+                    }
+
                 }
             }
             heading();
