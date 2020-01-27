@@ -36,8 +36,8 @@ namespace NetDumaTechTestC
                 {
                     {
                         temp[3] = Console.ReadLine();
-                        if (isInt(temp[3]) == false) running = false;
-                        else if (isInt(temp[3]) == true) Console.WriteLine("You entered {0} please enter a valid string", temp[3]);
+                        if (isNotInt(temp[3]) == false) running = false;
+                        else if (isNotInt(temp[3]) == true) Console.WriteLine("You entered {0} please enter a valid string", temp[3]);
                     }
                 }
                 while (running == true)
