@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
-using System.Configuration;
-using System.Web.Configuration;
+using System.Configuration; 
 using System.Collections;
 
 namespace NetDumaTechTestC
@@ -18,7 +17,10 @@ namespace NetDumaTechTestC
         public Menus menu;
         static void Main(string[] args)
         {
+            Title t = new Title();
+            //t.databaseSelection();
             Menus menu = new Menus();
+
             menu.mainMenu();
             Console.ReadKey();
 
@@ -43,7 +45,7 @@ namespace NetDumaTechTestC
             Console.WriteLine(title.PadLeft(Console.BufferWidth / 2));
             Console.WriteLine(s);
         }
-
+        int dataAttempt = 1;
         public void databaseSelection()
         {
             bool running = true;
@@ -67,10 +69,10 @@ namespace NetDumaTechTestC
             switch (switchInput)
             {
                 case 1:
-                    p.dataflag = 0;
+                    dataAttempt = 0;
                     break;
                 case 2:
-                    p.dataflag = 1;
+                    dataAttempt = 1;
                     break;
             }
         }
@@ -91,7 +93,7 @@ namespace NetDumaTechTestC
         }
         public void openConnection()
         {
-            if(p.dataflag == 1)
+            if(dataAttempt == 1)
             {
                 try
                 {
@@ -110,12 +112,12 @@ namespace NetDumaTechTestC
                 }
             }
 
-            else if(p.dataflag == 0)
+            else if(dataAttempt == 0)
             {
                 try
                 {
-                    string setting = ()
-                    conn = new SqlConnection(builder.ConnectionString);
+                    string setting = GetConnectionStringByName("localdb");
+                    conn = new SqlConnection(setting);
                     conn.Open();
                     Console.WriteLine("Server Status : " + conn.State);
                 }

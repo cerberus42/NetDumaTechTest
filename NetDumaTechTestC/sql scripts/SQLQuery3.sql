@@ -1,0 +1,1 @@
+﻿INSERT INTO Contact_Info (First_Name, Other_Name, Email, Telephone, Street, Town, Country) VALUES ('Jez', 'Horton', 'jez_98@hotmail.co.uk' , '07835554472', 'Great Hallingbury', 'Bishops Stortford', 'United Kingdom')
