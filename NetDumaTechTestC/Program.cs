@@ -11,7 +11,6 @@ namespace NetDumaTechTestC
             static void Main(string[] args)
             {
                 Console.ReadKey();
-
             }
         }
 
@@ -50,11 +49,6 @@ namespace NetDumaTechTestC
                 {
                     Console.WriteLine("Server has refused connection to the IP address");
                 }
-                catch (InvalidOperationException f)
-                {
-                    Console.WriteLine("Connection to the database has failed");
-                }
-
             }
         }
 }
