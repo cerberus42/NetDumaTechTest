@@ -9,12 +9,13 @@ namespace NetDumaTechTestC
     {
 
 
+
         public void mainMenu()
         {
             titlePrint("Welcome to the Address Book");
             bool running = true;
             Adding add = new Adding();
-            //Removal remove = new Removal();
+            Removal remove = new Removal();
             Console.WriteLine("What would you like to do with the address book?\n1. Add a contact to the database\n2. Delete a contact from the database\n3. Search through the database\n4. Exit");
 
             int switchInput = 0;
@@ -39,7 +40,7 @@ namespace NetDumaTechTestC
                     add.newContact();
                     break;
                 case 2:
-                    //remove.removeContact();
+                    remove.removeContact();
                     break;
                 case 3:
                     searchMenu();
@@ -128,6 +129,8 @@ namespace NetDumaTechTestC
                     break;
             }
         }
+
+
 
         public void confirmAdditionMenu()
         {

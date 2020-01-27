@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
+using System.Web.Configuration;
+using System.Collections;
 
 namespace NetDumaTechTestC
 {
 
     class Program
     {
+        public int dataflag;
+
         public Menus menu;
         static void Main(string[] args)
         {
@@ -22,6 +27,7 @@ namespace NetDumaTechTestC
 
     class Title
     {
+        Program p = new Program();
         public SqlConnection conn;
         public SqlDataReader dataReader;
 
@@ -38,22 +44,85 @@ namespace NetDumaTechTestC
             Console.WriteLine(s);
         }
 
+        public void databaseSelection()
+        {
+            bool running = true;
+            Console.WriteLine("Would you like to connect to azure or local db?\n1. Local database\n2. Azure Database");
+            int switchInput = 0;
+            while (running == true)
+            {
+                var input = Console.ReadKey();
+                if (char.IsDigit(input.KeyChar))
+                {
+                    switchInput = int.Parse(input.KeyChar.ToString());
+                    Console.WriteLine("\nUser Inserted : {0}", switchInput); // Say what user inserted 
+                    running = false;
+                }
+                else
+                {
+                    running = true;  // Else we assign a default value
+                    Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
+                }
+            }
+            switch (switchInput)
+            {
+                case 1:
+                    p.dataflag = 0;
+                    break;
+                case 2:
+                    p.dataflag = 1;
+                    break;
+            }
+        }
+        static string GetConnectionStringByName(string name)
+        {
+            // Assume failure.
+            string returnValue = null;
+
+            // Look for the name in the connectionStrings section.
+            ConnectionStringSettings settings =
+                ConfigurationManager.ConnectionStrings[name];
+
+            // If found, return the connection string.
+            if (settings != null)
+                returnValue = settings.ConnectionString;
+
+            return returnValue;
+        }
         public void openConnection()
         {
-            try
+            if(p.dataflag == 1)
             {
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(); //Using the string builder so the access variables to the server are not visible
-                builder.DataSource = "temporarydb.database.windows.net,1433";
-                builder.UserID = "Jez";
-                builder.Password = "Temporary42";
-                builder.InitialCatalog = "AddressBook";
-                conn = new SqlConnection(builder.ConnectionString);
-                conn.Open();
-                Console.WriteLine("Server Status : " + conn.State);
+                try
+                {
+                    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(); //Using the string builder so the access variables to the server are not visible
+                    builder.DataSource = "temporarydb.database.windows.net,1433";
+                    builder.UserID = "Jez";
+                    builder.Password = "Temporary42";
+                    builder.InitialCatalog = "AddressBook";
+                    conn = new SqlConnection(builder.ConnectionString);
+                    conn.Open();
+                    Console.WriteLine("Server Status : " + conn.State);
+                }
+                catch (SqlException e) //Catching any exception caused by sql
+                {
+                    Console.WriteLine("Server has refused connection to the IP address");
+                }
             }
-            catch (SqlException e) //Catching any exception caused by sql
+
+            else if(p.dataflag == 0)
             {
-                Console.WriteLine("Server has refused connection to the IP address");
+                try
+                {
+                    string setting = ()
+                    conn = new SqlConnection(builder.ConnectionString);
+                    conn.Open();
+                    Console.WriteLine("Server Status : " + conn.State);
+                }
+                catch (SqlException e) //Catching any exception caused by sql
+                {
+                    Console.WriteLine("Cannot open mdf file");
+                }
             }
 
 

@@ -8,7 +8,6 @@ namespace NetDumaTechTestC
 {
     class Adding : Title
     {
-
         Menus menu = new Menus();
         bool running = true;
         public void newContact()
