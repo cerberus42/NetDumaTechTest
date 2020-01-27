@@ -45,7 +45,7 @@ namespace NetDumaTechTestC
             Console.WriteLine(title.PadLeft(Console.BufferWidth / 2));
             Console.WriteLine(s);
         }
-        int dataAttempt = 1;
+        int dataAttempt = 1; //This database selection is the one that doesn't work, as the connection string generated
         public void databaseSelection()
         {
             bool running = true;
