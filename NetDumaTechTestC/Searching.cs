@@ -151,6 +151,89 @@ namespace NetDumaTechTestC
                     Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
                 }
             }
+            switch (switchInput)
+            {
+                case 1:
+                    varSwitch = "Contact_ID";
+                    break;
+                case 2:
+                    varSwitch = "First_Name";
+                    break;
+                case 3:
+                    varSwitch = "Other_Name";
+                    break;
+                case 4:
+                    varSwitch = "Street";
+                    break;
+                case 5:
+                    varSwitch = "Town";
+                    break;
+                case 6:
+                    varSwitch = "Country";
+                    break;
+                case 7:
+                    Environment.Exit(0);
+                    break;
+            }
+            running = true;
+            Console.WriteLine("How would you like to order it?\n1. Ascending\n2. Descending");
+            switchInput = 0;
+            while (running == true)
+            {
+                var input = Console.ReadKey();
+                if (char.IsDigit(input.KeyChar))
+                {
+                    switchInput = int.Parse(input.KeyChar.ToString());
+                    Console.WriteLine("\nUser Inserted : {0}", switchInput); // Say what user inserted 
+                    running = false;
+                }
+                else
+                {
+                    running = true;
+                    Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
+                }
+            }
+            string statement = "";
+            openConnection();
+            if (switchInput == 1)
+            {
+                statement = string.Format("SELECT * FROM Contact_Info ORDER BY {0} ASC", varSwitch, keyword);
+                SqlCommand ascCommand = new SqlCommand(statement, conn);
+                dataReader = ascCommand.ExecuteReader();
+
+                if (concatFlag == 1)
+                {
+                    dataReader.Close();
+                    statement = string.Format("SELECT CONCAT(First_Name ,Other_Name) AS Full_Name, Email, Telephone, CONCAT(Street, Town, Country) AS Address FROM Contact_Info ORDER BY {0} ASC", varSwitch, keyword);
+                    SqlCommand ascConcatCommand = new SqlCommand(statement, conn);
+                    dataReader = ascConcatCommand.ExecuteReader();
+                }
+            }
+
+            else if (switchInput == 2)
+            {
+
+                statement = string.Format("SELECT * FROM Contact_Info ORDER BY {0} DESC", varSwitch, keyword);
+                SqlCommand descCommand = new SqlCommand(statement, conn);
+                dataReader = descCommand.ExecuteReader();
+                if (concatFlag == 1)
+                {
+                    dataReader.Close();
+                    statement = string.Format("SELECT CONCAT(First_Name ,Other_Name) AS Full_Name, Email, Telephone, CONCAT(Street, Town, Country) AS Address FROM Contact_Info ORDER BY {0} ASC", varSwitch, keyword);
+                    SqlCommand descConcatCommand = new SqlCommand(statement, conn);
+                    dataReader = descConcatCommand.ExecuteReader();
+                }
+            }
+            heading();
+            while (dataReader.Read())
+            {
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    Console.Write(dataReader.GetValue(i));
+                }
+            }
+            concatFlag = 0;
+
 
         }
 

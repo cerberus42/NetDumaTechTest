@@ -3,19 +3,61 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 
 namespace NetDumaTechTestC
 {
-        class Program
+    class Program
+    {
+
+        static void Main(string[] args)
         {
-            static void Main(string[] args)
+            titlePrint("Welcome to the Address Book");
+            bool running = true;
+            Adding add = new Adding();
+            Removal remove = new Removal();
+            Console.WriteLine("What would you like to do with the address book?\n1. Add a contact to the database\n2. Delete a contact from the database\n3. Search through the database\n4. Exit");
+
+            int switchInput = 0;
+            while (running == true)
             {
-                Console.ReadKey();
+                var input = Console.ReadKey();
+                if (char.IsDigit(input.KeyChar))
+                {
+                    switchInput = int.Parse(input.KeyChar.ToString());
+                    Console.WriteLine("\nUser Inserted : {0}", switchInput); // Say what user inserted 
+                    running = false;
+                }
+                else
+                {
+                    running = true;  // Else we assign a default value
+                    Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
+                }
             }
+            switch (switchInput)
+            {
+                case 1:
+                    add.newContact();
+                    break;
+                case 2:
+                    remove.removeContact();
+                    break;
+                case 3:
+                    searchMenu();
+                    break;
+                case 4:
+                    Environment.Exit(0);
+                    break;
+            }
+            mainMenu();
         }
+
+    }
+        
 
     class Title
     {
+        public int dataflag = 1; // global variable to change between the local db and azure db
         public SqlConnection conn;
         public SqlDataReader dataReader;
 
@@ -36,6 +78,8 @@ namespace NetDumaTechTestC
         {
             try
             {
+                if (dataflag == 1)
+                {
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(); //Using the string builder so the access variables to the server are not visible
                 builder.DataSource = "temporarydb.database.windows.net,1433";
                 builder.UserID = "Jez";
@@ -44,6 +88,14 @@ namespace NetDumaTechTestC
                 conn = new SqlConnection(builder.ConnectionString);
                 conn.Open();
                 Console.WriteLine("Server Status : " + conn.State);
+                }
+                else if (dataflag == 0)
+                {
+                    conn = new SqlConnection();
+                    conn.Open();
+                    Console.WriteLine("Server Status : " + conn.State);
+                }
+
             }
             catch (SqlException e) //Catching any exception caused by sql
             {

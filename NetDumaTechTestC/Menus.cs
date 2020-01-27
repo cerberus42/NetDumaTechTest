@@ -9,8 +9,7 @@ namespace NetDumaTechTestC
     class Menus : Title
     {
 
-    int dataflag = 1;
-
+   
         public void mainMenu()
         {
             titlePrint("Welcome to the Address Book");
@@ -49,6 +48,31 @@ namespace NetDumaTechTestC
         }
         public void databaseType()
         {
+            bool running = true;
+            Console.WriteLine("What type of database would you like to use?\n1. Locally Stored\n2. Azure stored database");
+            int switchInput = 0;
+            while (running == true)
+            {
+                var input = Console.ReadKey();
+                if (char.IsDigit(input.KeyChar))
+                {
+                    switchInput = int.Parse(input.KeyChar.ToString());
+                    Console.WriteLine("\nUser Inserted : {0}", switchInput); // Say what user inserted 
+                    running = false;
+                }
+                else
+                {
+                    running = true;
+                    Console.WriteLine("\nUser didn't insert a Number"); // Say it wasn't a number
+                }
+            }
+            switch (switchInput)
+            {
+                case 1:dataflag = 0;
+                    break;
+                case 2: dataflag = 1;
+                    break;
+            }
 
         }
         public void searchMenu()
